@@ -287,7 +287,7 @@ namespace TAiO
                     stringBuilder.Append($"{_graph[i, j]} ");
                 }
 
-                stringBuilder.AppendLine("|");
+                stringBuilder.AppendLine();
             }
 
             return stringBuilder.ToString();
