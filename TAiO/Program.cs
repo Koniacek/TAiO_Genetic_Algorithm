@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 
 namespace TAiO
 {
@@ -7,33 +9,52 @@ namespace TAiO
     {
         static void Main(string[] args)
         {
+            string pathToFile1, pathToFile2;
+            int generationSize = 0, generationCount = 0;
+            bool breakWhenScoreDrops = false;
+            Graph g1, g2;
+            if (args.Length < 4)
+            {
+                throw new ArgumentException("Too few arguments");
+            }
+            if (!string.IsNullOrEmpty(args[0])&&!string.IsNullOrEmpty(args[1]))
+            {
+                pathToFile1 = args[0];
+                pathToFile2 = args[1];
+            }
+            else
+            {
+                throw new ArgumentException("Empty path arguments");
+            }
+
+            if (int.TryParse(args[2], out var value1)&&int.TryParse(args[3],out var value2))
+            {
+                generationSize = value1;
+                generationCount = value2;
+            }
+            else
+            {
+                throw new ArgumentException("Could not parse generation size or generation count");
+            }
+
+            if (args.Length == 5 && bool.TryParse(args[4], out var value))
+            {
+                breakWhenScoreDrops = value;
+            }
+
+            g1 = GraphLoader.LoadGraph(pathToFile1);
+            g2 = GraphLoader.LoadGraph(pathToFile2);
+
             var watch = Stopwatch.StartNew();
-            int[,] matrix1 =
-            {
-                {0,1,1,0},
-                {1,0,0,1},
-                {1,0,0,1},
-                {0,1,1,0}
-            };
 
-            int[,] matrix2 =
-            {
-                {0,1,1,1},
-                {1,0,1,1},
-                {1,1,0,1},
-                {1,1,1,0}
-            };
-
-            var g1 = new Graph(matrix1);
-            var g2 = new Graph(matrix2);
-            var generationSize = 100;
-            var generationCount = 400;
-
-            var algorithm = new GeneticAlgorithm(generationSize, generationCount,true);
+            var algorithm = new GeneticAlgorithm(generationSize, generationCount, breakWhenScoreDrops);
             var solution = algorithm.FindMaximalCommonSubgraph(g1, g2);
-            watch.Stop();
+
             Console.WriteLine(solution.ToString());
-            Console.WriteLine($"{watch.ElapsedMilliseconds}ms, score={solution.Score}");
+            #if DEBUG
+
+            Console.WriteLine($"{watch.ElapsedMilliseconds}ms");
+            #endif
         }
     }
 }
