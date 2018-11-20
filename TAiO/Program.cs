@@ -29,7 +29,7 @@ namespace TAiO
             var generationSize = 100;
             var generationCount = 400;
 
-            var algorithm = new GeneticAlgorithm(generationSize, generationCount);
+            var algorithm = new GeneticAlgorithm(generationSize, generationCount,true);
             var solution = algorithm.FindMaximalCommonSubgraph(g1, g2);
             watch.Stop();
             Console.WriteLine(solution.ToString());
