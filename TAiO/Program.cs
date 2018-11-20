@@ -11,8 +11,7 @@ namespace TAiO
         {
             string pathToFile1, pathToFile2;
             int generationSize = 0, generationCount = 0;
-            bool breakWhenScoreDrops = false;
-            Graph g1, g2;
+            var breakWhenScoreDrops = false;
             if (args.Length < 4)
             {
                 throw new ArgumentException("Too few arguments");
@@ -42,8 +41,8 @@ namespace TAiO
                 breakWhenScoreDrops = value;
             }
 
-            g1 = GraphLoader.LoadGraph(pathToFile1);
-            g2 = GraphLoader.LoadGraph(pathToFile2);
+            var g1 = GraphLoader.LoadGraph(pathToFile1);
+            var g2 = GraphLoader.LoadGraph(pathToFile2);
 
             var watch = Stopwatch.StartNew();
 
@@ -51,10 +50,10 @@ namespace TAiO
             var solution = algorithm.FindMaximalCommonSubgraph(g1, g2);
 
             Console.WriteLine(solution.ToString());
-            #if DEBUG
+#if DEBUG
 
-            Console.WriteLine($"{watch.ElapsedMilliseconds}ms");
-            #endif
+            Console.WriteLine($"{watch.ElapsedMilliseconds}ms, score={solution.Score}");
+#endif
         }
     }
 }

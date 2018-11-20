@@ -2,7 +2,7 @@
   "profiles": {
     "TAiO": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\jacek_000\\Documents\\Studia\\VII_semestr\\Teoria_Algorytmów_i_Obliczeń\\examples\\4_4_Hartman_A.csv C:\\Users\\jacek_000\\Documents\\Studia\\VII_semestr\\Teoria_Algorytmów_i_Obliczeń\\examples\\4_4_Hartman_B.csv 64 64"
+      "commandLineArgs": "C:\\Users\\jacek_000\\Documents\\Studia\\VII_semestr\\Teoria_Algorytmów_i_Obliczeń\\examples\\6_4_Hartman_A.csv C:\\Users\\jacek_000\\Documents\\Studia\\VII_semestr\\Teoria_Algorytmów_i_Obliczeń\\examples\\6_4_Hartman_B.csv 256 256"
     }
   }
 }

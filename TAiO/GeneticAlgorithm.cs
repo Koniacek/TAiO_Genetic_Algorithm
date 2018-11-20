@@ -22,6 +22,7 @@ namespace TAiO
 
         public Graph FindMaximalCommonSubgraph(Graph g1, Graph g2)
         {
+            var best = new Graph(new int[1, 1]);
             _generation = new List<Graph>();
             var maxSize = g1.Size < g2.Size ? g1.Size : g2.Size;
             var generationScore = int.MinValue;
@@ -30,6 +31,7 @@ namespace TAiO
             {
                 AssignScores(g1,g2);
                 _generation.Sort((graph1, graph2) => graph1.Score.CompareTo(graph2.Score));
+                if (_generation.First().Score > best.Score) best = _generation.First().Clone();
                 KillHalfOfTheGeneration();
                 var babies=MakeBabies();
                 _generation.AddRange(babies);
@@ -37,10 +39,15 @@ namespace TAiO
                 var newGenerationScore = CalculateGenerationScore();
                 if (newGenerationScore < generationScore&&_breakWhenScoreDrops) break;
                 generationScore = newGenerationScore;
+#if DEBUG
+                AssignScores(g1,g2);
+                Console.WriteLine($"Generation #{i}, score = {CalculateGenerationScore()}");
+#endif
             }
-
+            AssignScores(g1,g2);
             var bestScore = _generation.Max(graph => graph.Score);
-            return _generation.First(graph => graph.Score == bestScore);
+            var bestInLastGeneration = _generation.First(graph => graph.Score == bestScore);
+            return best.Score > bestInLastGeneration.Score ? best : bestInLastGeneration;
         }
 
         private void CreateFirstGeneration(int generationSize, int maxSize)

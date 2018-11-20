@@ -292,6 +292,10 @@ namespace TAiO
 
             return stringBuilder.ToString();
         }
+        public Graph Clone()
+        {
+            return new Graph(_graph);
+        }
 
         #endregion
 
